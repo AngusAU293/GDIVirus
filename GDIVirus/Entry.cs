@@ -211,18 +211,9 @@ namespace GDIVirus
 
             PCM_Audio c_pcm = new PCM_Audio();
             float[] freqs = { 50f, 90f, 80f, 56f, 102f, 150f, 130f, 80f };
-            float[] freqs2 = { 200f, 150f, 200f, 150f };
+            float[] freqs2 = { 150f, 50f, 150f, 50f };
             float[] freqs3 = { 50f, 150f, 70f, 150f, 10f, 200f };
             float[] freqs4 = { 200f, 50f, 70f, 150f, 190f, 220f };
-
-            void PCM1()
-            {
-                c_pcm.PCM(Waves.Square, 16000, 1, freqs3, 10);
-            }
-            void PCM2()
-            {
-                c_pcm.PCM(Waves.Sine, 10000, 5, freqs4, 14);
-            }
 
             Thread launchWindowsThread = new Thread(CreateBouncingWindows);
 
@@ -250,11 +241,7 @@ namespace GDIVirus
             Thread.Sleep(5000);
             tunnel.Stop();
             RestoreScreen(original_screen);
-            original_screen = CaptureScreen();
-            Thread pcm1 = new Thread(new ThreadStart(PCM1));
-            pcm1.Start();
-            Thread pcm2 = new Thread(new ThreadStart(PCM2));
-            pcm2.Start();
+            c_pcm.PCM(Waves.Square, 16000, 1, freqs3, 10);
             slide.Start(5, 5, 10);
             SpawnRandomText(400, 1, "LOL LOL LOL", true);
             invert.Start();
@@ -262,22 +249,18 @@ namespace GDIVirus
             invert.Stop();
             slide.Stop();
             hatchBrush.Start();
-            pcm1.Join();
-            pcm2.Join();
             c_pcm.PCM(Waves.Square, 18000, 5, freqs3, 16);
-            slide.Start(-5, -5, 80);
+            slide.Start(-5, -5, 50);
             Thread.Sleep(8000);
             hatchBrush.Stop();
             slide.Stop();
             RestoreScreen(original_screen);
-            original_screen = CaptureScreen();
             c_pcm.PCM(Waves.Whitenoise, 16000, 1, freqs4, 10);
             invert.Start();
             blur.Start();
             Thread.Sleep(8000);
             invert.Stop();
             blur.Stop();
-            RestoreScreen(original_screen);
         }
     }
 }
